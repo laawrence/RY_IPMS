@@ -1,0 +1,3 @@
+<apex:page controller="OfferApplicationsController"  action="{!backfillRailsExternalIdIfNeeded}">
+  <apex:iframe src="https://app.remoteyear.com/admin/applications/{!application.Rails_External_Id__c}/offers/index_iframe" scrolling="true" id="theIframe"/>
+</apex:page>

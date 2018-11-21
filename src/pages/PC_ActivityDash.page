@@ -1,0 +1,149 @@
+<apex:page docType="html-5.0" sidebar="false" controller="PC_ActivityDash" standardStylesheets="false" title="PC Activities">
+
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"/>
+    </head>    
+    
+    <style type="text/css">
+    
+		<!--Common Styling Attributes-->
+        h1 {font-size: 30pt; font-family: Lato;}
+        h2 {font-size: 20pt; font-family: Lato;} 
+        h3 {font-size: 16pt; font-family: Lato;}
+        h4 {font-size: 14pt; font-family: Lato; color: #808080;}
+        p {font-size: 14pt; font-family: Lato;}
+        
+        
+        <!--Unique Styling Attributes for this page-->
+        #header {
+                float: left;    
+                clear: both;
+                width: 100%;
+                background: #FAF5EF;
+                margin: -10px -20px 0px -10px;
+            padding: 10px;
+            }   
+        
+        #user_info {
+                float: left;
+                clear: left;
+                width: 100%;
+                margin: 20px 20px 20px 75px;
+                
+        } 
+        
+        #dp {
+         border: 0.5px solid black;   
+        }
+                
+        #pc_activities {
+            float: left;
+            padding:20px 20px 20px 75px;
+        }
+        
+        #activity_table {border-collapse:collapse;}
+        #activity_table td {line-height: 5px;}
+        #activity_table th {
+            background: #56B3B2; 
+            color: white;
+            line-height: 300%;
+        }
+        
+        .data_column {
+         	padding: 0 20px 0 20px;
+            width: 150px;
+            text-align: center;
+        }
+      
+    </style>
+        
+    <div id="header">
+    
+        <div id="page_title">
+            <table>
+                <tr>
+                    <th><img  src="{! $Resource.RY_logo }" width="70" /></th>
+                    <th><h1>PC Activities</h1></th>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="user_info">
+           <table>
+               <tr>
+                   <th><img id="dp" src="{! PCInfo.FullPhotoUrl}" width="70"/></th>
+                   <th><h2>{! PCInfo.Name } - Month of August</h2></th>
+
+               </tr>
+            </table>
+			
+            <p>
+                Below is information on your sales activities for the month of August. 
+                This is compared to the team's average. 
+            </p>
+            
+        </div>
+        
+    </div>
+    
+    
+    <div id="contents">
+
+        <div id="pc_activities">
+            
+            <table id="activity_table">
+               
+                <tr>
+                <th></th>
+                    <th class="data_column"><h3>YOU</h3></th>
+                    <th class="data_column"><h3>TEAM AVG</h3></th>
+                </tr>
+
+                <tr>
+                <td><h3>Consultations Scheduled</h3></td>
+                   <td class="data_column"><p>{! scheduled }</p></td>
+                    <td class="data_column"><p>{! TeamScheduled }</p></td>
+               </tr>
+
+               <tr class="conv_rates">
+                   <td><h4>Hold Rate</h4></td>
+                   <td class="data_column"><p>{! HoldRate }%</p></td>
+                   <td class="data_column"><p>{! TeamHoldRate }%</p></td>
+               </tr>
+
+               <tr>
+                   <td><h3>Consultations Completed</h3></td>
+                   <td class="data_column"><p>{! completes }</p></td>
+                   <td class="data_column"><p>{! TeamCompletes }</p></td>
+               </tr>
+
+               <tr class="conv_rates">
+                   <td><h4>C-O Conversion %</h4></td>
+                   <td class="data_column"><p>{! CORate }%</p></td>
+                   <td class="data_column"><p>{! TeamCORate }%</p></td>
+               </tr>
+
+               <tr>
+                   <td><h3>Opportunities Created</h3></td>
+                   <td class="data_column"><p>{! opps }</p></td>
+                   <td class="data_column"><p>{! teamopps }</p></td>
+               </tr>
+
+                <tr class="conv_rates">
+                   <td><h4>Opp to Win %</h4></td>
+                   <td class="data_column"><p>{! OWRate }%</p></td>
+                    <td class="data_column"><p>{! teamOWRate }%</p></td>
+               </tr>
+
+                <tr>
+                   <td><h3>Wins</h3></td>
+                   <td class="data_column"><p>{! wins }</p></td>
+                    <td class="data_column"><p>{! teamWins }</p></td>
+               </tr>
+
+            </table>
+        </div>
+        
+    </div>    
+    
+</apex:page>

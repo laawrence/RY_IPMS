@@ -1,0 +1,615 @@
+<apex:page sidebar="false" standardController="Application__c" standardStylesheets="false">
+        
+        <!--HEADER-->
+        
+        <div id="body">
+        <head>
+        
+            <div id="head">
+            <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
+            
+            
+            <!-- <img src="http://i.imgur.com/8kql4MK.png"/> -->
+            <h1><apex:outputField value="{! Application__c.First_name__c }"/>&nbsp;
+                <apex:outputField value="{! Application__c.Last_name__c }" /></h1>
+                <br/>
+            <!-- <a id="applink" href="" target="_blank" title="Full Application">See full application</a>   -->
+                
+            </div>
+            
+        
+        </head>
+        
+        
+        <!--Interviewee Info Window-->
+        <div id="all_info" >
+        
+        
+            <!--PERSONAL INFO-->
+            <!--  -->
+            <!--  -->
+            <!--  -->
+            <!--  -->
+            <div id="pers_info" class="vf_divs">
+                
+                <h3>About&nbsp;<apex:outputField value="{! Application__c.First_name__c }"/></h3>
+                
+                <table>
+                
+                            
+                <tr>
+                <td class="field_name">Name</td>
+                <td class="app_info"><apex:outputField value="{! Application__c.First_name__c }"/>&nbsp;
+                <apex:outputField value="{! Application__c.Last_name__c }" /></td>
+                </tr>
+                                
+                <tr>
+                <td class="field_name">DOB</td> 
+                <td class="app_info"><apex:outputField value="{! Application__c.birthdate__c }" /></td>
+                </tr>
+                
+                <tr>
+                <td class="field_name">Country</td>
+                <td class="app_info"><apex:outputField value="{! Application__c.current_country__c }" /></td>
+                </tr>
+                
+                <tr>
+                <td class="field_name">Citizenship</td>
+                <td class="app_info"><apex:outputField value="{! Application__c.Primary_country_of_citizenship__c }" /></td>
+                </tr>
+                
+                <tr>
+                <td class="field_name">Income</td>
+                <td class="app_info"><apex:outputField value="{! Application__c.annual_income__c }" /></td>
+                </tr>
+
+                
+                </table>
+                
+            </div>
+            
+            <!--WORK INFO-->
+            <div id="work_info" class="vf_divs">
+                <h3>Work Info</h3>
+            <table> 
+                        
+                <tr>
+                <td class="field_name">Current Job</td>
+                <td class="app_info"><apex:outputField value="{! Application__c.current_job__c }" /></td>
+                </tr>
+                
+                <tr>
+                <td class="field_name">Company</td>
+                <td class="app_info"><apex:outputField value="{! Application__c.current_company__c }" /></td>
+                </tr>
+                
+                <tr>
+                <td class="field_name">Remote Work Level</td>
+                <td class="app_info"><apex:outputField value="{! Application__c.current_level_of_remote_work__c }" /></td>
+                </tr>
+                
+                
+                <tr>
+                <td class="field_name">Employer Approval</td>
+                <td class="app_info"><apex:outputField value="{! Application__c.employer_approval__c }" /></td>
+                </tr>
+                
+                <tr>
+                <td class="field_name">Earliest Departure Date</td>
+                <td class="app_info"><apex:outputField value="{! Application__c.earliest_departure_date__c }" /></td>
+                </tr>
+                
+
+            </table>
+            </div>
+        
+        </div>
+        
+        <!--INTERVIEW INFO-->
+        <!--  -->
+        <!--  -->
+        <!--  -->
+        <!--  -->
+        <div id="interview_info" >
+        
+        <div id="interview_info_header">
+        <img class="AC_icons" src="http://i.imgur.com/dkD2HeS.png"/><h3 class="AC_activity">Interview Notes</h3>
+        </div>
+        
+        
+            <apex:form >
+        
+                <!-- <div id="other_notes" class="vf_divs"> -->
+                    
+                    <table>
+                    
+                    
+                    <tr>
+                    <td><apex:inputField html-placeholder="Type interview notes here" value="{! Application__c.other_notes__c }" style="width: 100%; height: 150px;"/></td>
+                    </tr>
+                    </table>
+                    
+                <!-- </div> -->
+                
+                
+                <div id="notes_1" >
+                    
+                    <table>
+                    
+                    <tr>
+                    <td class="int_fields">Employment Notes</td>
+                    </tr>
+                    
+                    
+                    <tr>
+                    <td><apex:inputField styleclass="emp_notes" html-placeholder="Employment Notes" value="{! Application__c.Employment_notes__c }" /></td>
+                    </tr>
+                    
+                    
+                    <tr>
+                    <td class="int_fields">Application Status</td>
+                    </tr>
+                    
+                    
+                    <tr>
+                    <td><apex:inputField styleClass="dropdowns" value="{! Application__c.Application_status__c }" /></td>
+                    </tr>
+                    
+                    <tr>
+                    <td class="int_fields">Interview Completed Date</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField value="{! Application__c.interview_completed_date__c }" /></td>
+                    </tr>
+                    
+                    <tr>
+                    <td class="int_fields">Overall Fit</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField styleClass="dropdowns" value="{! Application__c.overall_fit__c }" /></td>
+                    </tr>
+                    
+                    
+                    <tr>
+                    <td class="int_fields">Accepted?</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField styleClass="dropdowns" value="{! Application__c.decision__c }" /></td>
+                    </tr>
+                    
+                    <tr>
+                    <td class="int_fields">Program</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField value="{! Application__c.program__c }" /></td>
+                    </tr>
+                    
+                    <tr>
+                    <td class="int_fields">Main Time Zone</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField styleClass="dropdowns" value="{! Application__c.main_time_zone__c }" /></td>
+                    </tr>
+                    
+                    
+                    
+                    
+                    </table>
+                </div>
+                
+                <div id="notes_2" >
+                
+                    <table>
+                    
+                    
+                    
+                    <tr>
+                    <td class="int_fields">Time Zone Dependant</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField styleClass="dropdowns" value="{! Application__c.time_zone_dependant__c }" /></td>
+                    </tr>
+                    
+                
+                    <tr>
+                    <td class="int_fields">Level of Remote Work</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField styleClass="dropdowns" value="{! Application__c.level_of_remote_work__c }"/></td>
+                    </tr>
+                    
+                    <tr>
+                    <td class="int_fields">Primary Objection</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField styleClass="dropdowns" value="{! Application__c.primary_objection__c }" />   </td>                 
+                    </tr>
+                    
+                    <tr>
+                    <td class="int_fields">Primary Motivation</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField styleClass="dropdowns" value="{! Application__c.primary_motivation__c }" />   </td>                    
+                    </tr>
+                    
+                    <tr>
+                    <td class="int_fields">Employer Strategy Call</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField value="{! Application__c.invited_to_employer_strategy_call__c }" />   </td>                    
+                    </tr>     
+                    
+                    <tr>
+                    <td class="int_fields">Follow Up Call?</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField value="{! Application__c.next_follow_up_date__c }" />   </td>                    
+                    </tr>
+                        
+                    <tr>
+                    <td class="int_fields">Follow Up Call Notes</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField styleclass="emp_notes" value="{! Application__c.next_follow_up_notes__c }" />   </td>                    
+                    </tr>    
+                
+                    <tr>
+                    <td class="int_fields">Pipeline Color</td>
+                    </tr>
+                    
+                    <tr>
+                    <td><apex:inputField styleClass="dropdowns" value="{! Application__c.pipeline_color__c }" /></td>
+                    </tr>
+                
+                    </table>
+                </div>
+            
+            
+        
+            
+            <div id="pipeline_color" >
+                <!--SAVE BUTTON-->
+                <table>
+                
+                
+            
+                <tr>
+                <td><apex:commandLink styleClass="button" action="{! save }" value="Save"/></td>
+                </tr>
+                
+                </table>
+            </div>
+        
+            </apex:form>
+        
+        
+        
+        </div>
+        
+        </div>
+        
+        <style type="text/css">
+            
+            #body {
+                background: #F7F7F7;
+                margin: -10px 0 0 -10px;
+                position: absolute; 
+            }
+            
+            #head {
+                margin-left: 30px;
+                margin-top: 10px;
+                height: 10%;
+                vertical-align: middle;
+                
+                }
+                
+            #head img {
+                width:40px;
+            }   
+                
+            h1 {font-size: 25pt; 
+                text-transform: uppercase; 
+                font-family: 'open sans'; 
+                font-weight: bold;
+            }
+                
+            h2 {
+                font-size: 18pt;
+                text-transform: uppercase;
+                font-family: 'open sans';
+                font-weight: bold;
+            }
+            
+            h3 {
+                font-size: 14pt;
+                text-transform: uppercase;
+                font-family: 'open sans';
+                font-weight: bold;
+                color: #5D5D5D;
+            }
+            
+            .AC_activity {
+                color: #FFFFFF;
+            }
+            
+            .AC_icons {
+                vertical-align: middle;
+                height: 100%;
+                margin-right: 5px;
+            }
+            
+            p { font-weight: bold; }
+                
+            div {
+                font-family: 'open sans';
+                font-size: 10pt;
+                }
+                
+            
+            table {
+                position: relative;
+                width: 100%;
+            }
+            
+            td {
+                padding: 5px;
+                <!-- border: 1px solid black; -->
+            }
+            
+            table, td, th {
+            }
+            
+            .vf_divs {
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0px 1px 1px #D1D1D1;
+                background: white;
+            }
+            
+            .field_name {
+                color: #7F7F7F;
+                width: 15%;
+                text-align: right;
+            }
+            
+            .int_fields {
+                color: #7F7F7F;
+            }
+            
+            .emp_notes {
+                width: 100%;
+                height: 21px;
+            }
+            
+
+            
+            #all_info { 
+                margin: 20px 0 20px 30px;
+                position: relative;
+                float: left;
+                width: 30%;
+                
+                }
+            
+                #pers_info {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    }
+                
+                #work_info {
+                    float: left;
+                    clear: left;
+                    width: 100%;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    }
+            
+            #interview_info {
+                width: 60%;
+                height: auto;
+                display: table;
+                padding: 15px;
+                float: left;
+                margin-left: 50px;
+                margin-top: 20px;
+                border-radius: 5px;
+                box-shadow: 0px 1px 1px #D1D1D1;
+                background: white;
+            
+            }
+            
+            #interview_info_header {
+                background: #191919;
+                width: 100%;
+                height: 30px;
+                margin: -15px -15px 15px -15px;
+                padding: 15px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                vertical-align: middle;
+            }
+            
+                #other_notes {  
+                    margin-bottom:10px;
+                    }
+                
+                #notes_1 {
+                    float: left;
+                    width: 49%;}
+                
+                #notes_2 {
+                    margin-left:2%;
+                    float: left;
+                    width: 49%;
+                    }
+                
+                #pipeline_color {   
+                    clear:left;
+                    <!-- position: relative;
+                    float: left; -->}
+            
+            .dropdowns {
+                <!-- background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0; -->
+                <!-- height: 29px; -->
+                overflow: hidden;
+                width: 100%;
+                <!-- -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px; -->
+                border: none;
+                background-color: #EDE9E9;
+                <!-- background-color: #919191; -->
+                padding: 5px;
+                color: #000;
+            
+            }
+            
+            
+            
+            
+            .button {
+              display: flex;
+              overflow: hidden;
+              
+              flex-wrap: wrap;
+                justify-content: center;
+
+              margin: 10px;
+              padding: 12px 12px;
+
+              cursor: pointer;
+              user-select: none;
+              transition: all 60ms ease-in-out;
+              text-align: center;
+              white-space: nowrap;
+              text-decoration: none !important;
+              text-transform: none;
+              text-transform: capitalize;
+
+              color: #fff;
+              border: 0 none;
+              border-radius: 4px;
+
+              font-size: 14px;
+              font-weight: 500;
+              line-height: 1.3;
+
+              -webkit-appearance: none;
+              -moz-appearance:    none;
+              appearance:         none;
+             
+              justify-content: center;
+              align-items: center;
+              flex: 0 0 160px;
+
+                      
+              }
+              
+              
+              <!--  -->
+              <!--  -->
+              <!--RESPONSIVE RESULTS-->
+              <!--  -->
+              <!--  -->
+              @media only screen and (max-width: 700px) {
+                    
+                    #all_info { 
+                    margin: 20px 0 20px 30px;
+                    position: relative;
+                    float: left;
+                    width: 60%;
+                    
+                    }
+                
+                    #pers_info {
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                    }
+                    
+                    #work_info {
+                        float: left;
+                        clear: left;
+                        width: 100%;
+                        margin-top: 20px;
+                        margin-bottom: 20px;
+                    }
+            
+                    #interview_info {
+                        width: 60%;
+                        height: auto;
+                        display: table;
+                        padding: 15px;
+                        float: left;
+                        margin-left: 30px;
+                        margin-top: 20px;
+                        border-radius: 5px;
+                        box-shadow: 0px 1px 1px #D1D1D1;
+                        background: white;
+                    
+                    }
+            
+                    #interview_info_header {
+                        background: #191919;
+                        width: 100%;
+                        height: 30px;
+                        margin: -15px -15px 15px -15px;
+                        padding: 15px;
+                        border-top-left-radius: 5px;
+                        border-top-right-radius: 5px;
+                        vertical-align: middle;
+                    }
+            
+                    #other_notes {  
+                        margin-bottom:10px;
+                    }
+                
+                    #notes_1 {
+                        float: left;
+                        width: 49%;
+                    }
+                
+                    #notes_2 {
+                        margin-left:2%;
+                        float: left;
+                        width: 49%;
+                    }
+                
+                    #pipeline_color {   
+                    }
+                }
+
+            
+            
+        </style>
+        
+        <script>
+            var url = document.URL;
+            
+            var array = url.split('=');
+            var lastsegment = array[array.length-1];
+            
+            var result = "https://c.na30.visual.force.com/apex/NewPage?core.apexpages.request.devconsole=1&id=" + lastsegment;
+
+            $('#applink').attr('href', result);
+            
+
+        </script>
+
+
+
+    </apex:page>

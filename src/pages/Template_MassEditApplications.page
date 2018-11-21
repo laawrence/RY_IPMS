@@ -1,0 +1,46 @@
+<apex:page standardController="Application__c" recordSetVar="unused" sidebar="false">
+
+<!-- for this page to work with a specific custom object, change standController="entityname" to custom object api name  
+    For example, if custom object name is Warehouse__c, change first part of the first line to standardController="warehouse__c" -->
+
+    
+<apex:includeScript value="{!$Resource.UtilJS}" />
+<apex:form >
+<apex:pageBlock >
+<apex:pageMessages />
+<apex:pageBlock >
+Note: All modifications made on the page will be lost if Return button is clicked without clicking the Save button first. 
+</apex:pageBlock>
+<apex:pageBlockButtons >
+<apex:commandButton value="Save" action="{!save}"/>
+<apex:commandButton value="Return" action="{!cancel}"/>
+</apex:pageBlockButtons>
+<apex:pageBlockTable value="{!selected}" var="a" id="table">
+<apex:column headerValue="Name">
+<apex:inputField value="{!a.name}"/>
+</apex:column>
+  <apex:column headerValue="Last Touch Date">
+ <apex:inputField value="{!a.Revisit_Date__c}"/>
+ </apex:column>
+  <apex:column headerValue="Associate Text Attempts">
+ <apex:inputField value="{!a.Associate_Text_Attempts_Number__c}"/>
+ </apex:column>
+   <apex:column headerValue="Associate Email Attempts">
+ <apex:inputField value="{!a.Associate_Email_Attempts_Number__c}"/>
+ </apex:column>
+   <apex:column headerValue="Associate Call Attempts">
+ <apex:inputField value="{!a.Associate_Call_Attempts_Number__c}"/>
+ </apex:column> 
+ <apex:column headerValue="Lead Name">
+ <apex:inputField value="{!a.Lead__c}"/>
+ </apex:column> 
+<apex:column headerValue="Application Status">
+ <apex:inputField value="{!a.Application_Status__c}"/>
+ </apex:column>
+ <apex:column headerValue="Offer Sent Date">
+ <apex:inputField value="{!a.Offer_Sent_Date__c}"/>
+ </apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

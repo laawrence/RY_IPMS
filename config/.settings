@@ -1,0 +1,17 @@
+{
+    "projectName": "RY_Staging",
+    "username": "lawrence.humblet@remoteyear.com.staging",
+    "id": "c0419100-e9f2-11e8-acca-0ffb7e1b628c",
+    "namespace": "",
+    "orgType": "developer",
+    "loginUrl": "https://login.salesforce.com/",
+    "instanceUrl": "https://cs50.salesforce.com",
+    "workspace": "/Users/lawrencehumblet/Documents/Work/Mavensmate_workspace",
+    "subscription": [
+        "ApexClass",
+        "ApexComponent",
+        "ApexPage",
+        "ApexTrigger",
+        "StaticResource"
+    ]
+}

@@ -1,0 +1,628 @@
+<apex:page controller="ApplicationSimpleController" sidebar="false" showHeader="false" standardStylesheets="false">
+    
+    <apex:stylesheet value="{!URLFOR($Resource.bootstrap, '/bootstrap-3.3.7-dist/css/bootstrap.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.bootstrapDatepicker, 'bootstrap-datepicker.min.css')}" />
+    
+    <apex:includeScript value="{!$Resource.jQuery}"/>
+    <apex:includeScript value="{!$Resource.jQueryValidate}"/>
+    <apex:includeScript value="{!URLFOR($Resource.bootstrap, '/bootstrap-3.3.7-dist/js/bootstrap.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.bootstrap, '/bootstrap-3.3.7-dist/js/bootstrap.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.bootstrapDatepicker, 'bootstrap-datepicker.min.js')}" />
+    
+    <style>
+        .container {
+        max-width: 1020px;
+        }
+        
+        .label-above {
+        font-family: "proxima-nova";
+        font-size: 20px;
+        letter-spacing: 0px;
+        font-weight: 400 !important;
+        font-weight: normal !important;
+        font-weight: 400 normal !important;
+        font-style: normal;
+        color: #4f4f4f;
+        }
+        
+        .help-block {
+        font-size: 14px;
+        font-family: "proxima-nova";
+        letter-spacing: 0px;
+        font-weight: 400;
+        font-style: normal;
+        color: #4f4f4f;
+        }
+        
+        .form-control-field {
+        width: 100%;
+        padding: 12px;
+        margin: 6px 0 4px;
+        border: 1px solid #ccc;
+        background: #fafafa;
+        font-family: sans-serif;
+        font-size: 14px;
+        line-height: normal;
+        box-sizing: border-box;
+        border-radius: 2px;
+        outline: none;
+        }
+        
+        .form-control-field:focus {
+        background-color:white;
+        }
+        
+        .paragraph-font {
+          font-family: "proxima-nova";
+          font-size: 20px;
+          letter-spacing: 0px;
+          font-weight: 400 !important;
+          font-weight: normal !important;
+          font-weight: 400 normal !important;
+          font-style: normal;
+          color: #4f4f4f;
+        }
+        
+        .submit-button {
+        font-family: "proxima-nova";
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: 300;
+        font-style: normal;
+        color: #fff;
+        background-color: #1a1a1a;
+        border-color: #1a1a1a;
+        display: inline-block;
+        width: auto;
+        height: auto;
+        padding: 1em 2.5em;
+        border-width: 0;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+        -webkit-appearance: none;
+        }
+        
+        .submit-button:hover {
+        opacity:0.8;
+        }
+        
+        .error {
+        border-color:red !important;
+        outline: red !important;
+        }
+        
+        .promoerror {
+        border-color:red !important;
+        outline: red !important;
+        }
+        
+        .error-message {
+        color:red !important;
+        display: block;
+        font-family: "proxima-nova";
+        }
+        
+        .pay-message {
+        font-family: "proxima-nova";
+        color: rgba(26,26,26,.7) !important;
+        }
+        
+        .success {
+        border-color:green !important;
+        outline: green !important;
+        }
+        
+        .promosuccess {
+        border-color:green !important;
+        outline: green !important;
+        }
+        
+        .verifyButton{
+        float:left;
+        }
+        
+        .message-container{
+        float:left;
+        margin-left:10px;
+        }
+        
+        .date-field {
+        width:25% !important;
+        }
+        
+        .ry-button {
+        border-radius: 0;
+        font-family: "proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: 300;
+        font-style: normal;
+        color: #fff;
+        background-color: #1a1a1a;
+        padding: 1em 2.5em;
+        border-width: 0;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+        -webkit-appearance: none;
+        font-size: 14px;        
+        }
+        .ry-button:disabled {
+            background-color: rgba(26, 26, 26, .5) ;
+        }        
+        .ry-button.inverse {
+        color: #1a1a1a !important;
+        background-color: #fff !important;
+        border: solid 1px #1a1a1a !important;
+        }
+        
+        label.error { 
+        color: red; 
+        display: block; 
+        font-family: "proxima-nova";
+        }
+        
+        .pay-message.error { 
+        color: red !important; 
+        font-family: "proxima-nova";
+        } 
+        
+        .action-message { 
+        color: #4f4f4f;
+        font-size: 14px; 
+        display: block; 
+        padding-bottom: 5px;
+        font-family: "proxima-nova";
+        }
+        
+        .disabled { 
+        color: rgba(26,26,26,.7); 
+        }      
+        
+        .dateFormat {
+        display: none;
+        }
+        
+        .hidden {
+        visibility: hidden; 
+        }
+    </style>
+    
+    <apex:form id="appForm">
+        <apex:messages id="messages"/>
+        
+        <!-- EMAIL ADDRESS -->
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span for="email-address">{!emailMessage}</span>
+                <span id="email-address-help" class="help-block">{!$Label.App2_Help_Email}</span>
+            </div>
+            <div class="col-md-12">
+                <apex:outputPanel id="emailPanel">
+                    <apex:inputtext value="{!app.Email__c}" id="email-address" styleclass="emailaddress form-control-field" html-aria-describedby="email-address-help" onkeyup="$('#email-continue-button').addClass('hidden');"/>
+                    <div class="action-message">{!emailMessage}</div>
+                    
+                </apex:outputPanel>
+                <button id="email-button" class="ry-button">{!$Label.App2_Button_LookupEmail}</button>
+                <button id="email-continue-button" class="ry-button inverse hidden">{!$Label.App2_Button_ContinueEmail}</button>
+            </div>
+        </div>
+        
+        
+        <!-- WHY RY -->               
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span >Why do you want to do Remote Year? *</span>
+                <span id="why-remote-year-help" class="help-block">Please answer in 250 words or less.</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputTextArea value="{!app.Why_Remote_Year__c}" rows="3" id="why-remote-year" styleclass="form-control-field" html-aria-describedby="why-remote-year-help" />
+            </div>
+        </div>
+        
+       
+        <!-- CURRENT JOB -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span >Tell us about your current job. If it will be different while on Remote Year, then please clarify. *</span>
+                <span id="current-job-help" class="help-block">We require every applicant to have their professional plans in place prior to joining Remote Year, please describe your current role in 150 words or less.</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputTextArea value="{!app.Current_Job__c}" rows="3" id="current-job" styleclass="form-control-field" html-aria-describedby="current-job-help" />
+            </div>
+        </div>
+        
+        <!-- CURRENT COMPANY -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span >What company do you work for? *</span>
+                <span id="current-company-help" class="help-block">If you run your own company, please say Self-Employed or if you Freelance please say Freelance.</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputTextArea value="{!app.Current_Company__c}" rows="3" id="current-company" styleclass="form-control-field" html-aria-describedby="current-company-help" />
+            </div>
+        </div>
+
+        <!-- REMOTE WORK (NEW) -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span >Please select the phrase that best describes how often you currently work remotely. *</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputField value="{!app.Current_Level_of_Remote_Work__c }" id="remote-work" styleclass="form-control-field"/>
+            </div>
+        </div>
+        
+        <!-- EMPLOYER APPROVAL (NEW) -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span >Do you need approval from anyone at your company to join Remote Year? *</span>
+                <span id="details-help" class="help-block">We offer critical guidance and resources for all accepted applicants to assist in getting permission from your employer.</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputField value="{!app.Employer_Approval__c }" id="employer-approval" styleclass="form-control-field"/>
+            </div>
+        </div>
+        
+         <!-- WHY YOU -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span >We’re building communities full of amazing and interesting people from around the world. How would you add to this community? *</span>
+                <span id="why-you-help" class="help-block">Please answer in 250 words or less.</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputTextArea value="{!app.Why_You__c}" rows="3" id="why-you" styleclass="form-control-field" html-aria-describedby="why-you-help" />
+            </div>
+        </div>
+        
+        <!-- POTENTIAL DATE -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span >What is the earliest date you would be able to depart on a Remote Year program?</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputField value="{!app.Earliest_Departure_Timeframe__c}" id="pot-departure-date" styleclass="form-control-field" html-aria-describedby="earliest-departure-date-help" />
+            </div>
+        </div>
+        
+        <!-- JOINT APPLICATION -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span for="joint-application">Joint Application</span>
+                <span id="joint-application-help" class="help-block">If you are applying with a partner, please indicate their email address.</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputText value="{!app.Joint_Application__c}" id="joint-application" styleclass="form-control-field" html-aria-describedby="joint-application-help" />
+            </div>
+        </div>
+        
+        <p class="paragraph-font">
+        Please provide us with two people who know you best (friends, family or colleagues) and can share why you would be a great fit for our community. 
+        </p>
+        
+        <!-- Recommender 1 Name -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span>Personal Reference #1 Name *</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputText value="{!app.Recommender_1_Name__c}" id="recommender-1-name" styleclass="form-control-field" html-aria-describedby="last-name-help"/>
+            </div>
+        </div>
+        
+        <!-- Recommender 1 Email -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span>Personal Reference #1 Email *</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputText value="{!app.Recommender_1_Email__c}" id="recommender-1-email" styleclass="form-control-field" html-aria-describedby="last-name-help"/>
+            </div>
+        </div>
+        
+        <!-- Recommender 1 Relationship -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span>Personal Reference #1 Relationship *</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputText value="{!app.Recommender_1_Relationship__c}" id="recommender-1-relationship" styleclass="form-control-field" html-aria-describedby="last-name-help"/>
+            </div>
+        </div>
+        
+        <!-- Recommender 2 Name -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span>Personal Reference #2 Name *</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputText value="{!app.Recommender_2_Name__c}" id="recommender-2-name" styleclass="form-control-field" html-aria-describedby="last-name-help"/>
+            </div>
+        </div>
+        
+        <!-- Recommender 2 Email -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span>Personal Reference #2 Email *</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputText value="{!app.Recommender_2_Email__c}" id="recommender-2-email" styleclass="form-control-field" html-aria-describedby="last-name-help"/>
+            </div>
+        </div>
+        
+        <!-- Recommender 2 Relationship -->                
+        <div class="row form-group">
+            <div class="col-md-12 label-above">
+                <span>Personal Reference #2 Relationship *</span>
+            </div>
+            <div class="col-md-12">
+                <apex:inputText value="{!app.Recommender_2_Relationship__c}" id="recommender-2-relationship" styleclass="form-control-field" html-aria-describedby="last-name-help"/>
+            </div>
+        </div>
+        
+        <apex:actionFunction name="verifyEmail" 
+                             action="{!verifyEmail}"
+                             rerender="emailPanel,variables,messages"
+                             oncomplete="verifyEmailComplete()"/>
+        <apex:commandButton action="{!submitApplication}" value="Submit Application" id="submit-application-button" styleClass="submit-button"/>
+        
+        
+        <apex:outputPanel id="finalMessagesPanel">
+            <div id="final-messages" class="action-message">{!finalMessage}</div> 
+        </apex:outputPanel>
+                              
+    </apex:form>
+    
+    <apex:outputPanel id="variables">
+        <script>
+        emailChecked = {!emailChecked};
+        appFound = {!appFound};
+        isApplicationSubmitted = {!isApplicationSubmitted};
+        </script>
+    </apex:outputPanel>
+    
+    <script>
+    var isProcessing = false;
+    var emailChecked = false;
+    var appFound = false;
+    
+    var isPaid = false;
+    var isSaved = false;
+    var lockCode = false;
+    
+    $(document).ready(function(){
+        $("select option[value='']").remove();
+        
+        enableFullValidation(false);
+        
+        $('[id*=earliest-departure-date]').datepicker({
+            format: 'm/d/yyyy',
+            startDate: '0d',
+            todayHighlight: true,
+            autoclose: true
+        });
+        
+        var postMessageTargetOrigin = 'http://www.remoteyear.com/*';
+        var receiveMessageOrigin = 'http://www.remoteyear.com'; //no slash or star
+        
+        window.addEventListener('message', function(e) {
+            // Check to make sure that this message came from the correct domain.
+            $('#stripe-messages').html('Processing payment'); 
+            if (e.origin !== receiveMessageOrigin) return;
+            if (e.data=='closed'){
+                if(!isProcessing){
+                    $('#stripe-messages').html('User cancelled payment form');
+                    $('#pay-button').prop("disabled",false);   
+                }
+            } else { 
+                submitApplication();
+            }
+        });
+        
+        $('#email-button').on('click', function(e) {
+            if($("[id*=appForm]").valid()) verifyEmail();
+            return false;
+        });
+        
+        $('#email-continue-button').on('click', function(e) {
+            enableFullValidation(true);
+            return false;
+        });
+            
+        
+        //jQuery Validation
+        $("[id*=appForm]").validate({
+            invalidHandler: function(event, validator) {
+                // 'this' refers to the form
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                  $("#stripe-messages").html('We are not able to submit yet. Please review ' + errors + ' highlighted item' + ((errors==1)?'':'s') + ' above.');
+                  $("#stripe-messages").addClass('error');
+                } else {
+                  $("#stripe-messages").html('');
+                  $("#stripe-messages").removeClass('error');
+                }
+            }
+        });
+        
+        $.validator.addMethod('dateUS', function(value, element) {
+            var check = false;
+            var re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+            if( re.test(value)){
+                var adata = value.split('/');
+                var mm = parseInt(adata[0],10);
+                var dd = parseInt(adata[1],10);
+                var yyyy = parseInt(adata[2],10);
+                var xdata = new Date(yyyy,mm-1,dd);
+                if ( ( xdata.getFullYear() == yyyy ) && ( xdata.getMonth () == mm - 1 ) && ( xdata.getDate() == dd ) )
+                    check = true;
+                else
+                    check = false;
+            } else
+                check = false;
+            return this.optional(element) || check;
+        }, "Please enter a date in the format mm/dd/yyyy");
+        
+        $.validator.addMethod('sfdcEmail', function (value) { 
+            return /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value); 
+        }, 'Please enter a valid email address.');      
+        
+        $('[id$=email-address]').rules("add",{
+            required: true,
+            sfdcEmail: true
+        });
+
+        
+    }); //end document ready   
+    
+    function enableFullValidation(isEnabled) {
+        if(isEnabled){
+            $("[id*=email-address]").prop("disabled",true);    
+            $("[id*=email-address]").addClass("disabled");    
+            $("#email-button").prop("disabled",true);
+            $("#email-button").addClass("hidden");            
+            $("#email-continue-button").addClass("hidden");
+            $("#stripe-messages").html('');
+            $("#stripe-messages").removeClass('error');
+            
+            
+            $("[id*=recommender-1-name]").prop("disabled",false);
+            $("[id*=recommender-1-email]").prop("disabled",false);
+            $("[id*=recommender-1-relationship]").prop("disabled",false);
+            $("[id*=recommender-2-name]").prop("disabled",false);
+            $("[id*=recommender-2-email]").prop("disabled",false);
+            $("[id*=recommender-2-relationship]").prop("disabled",false);
+            
+            $("[id*=why-remote-year]").prop("disabled",false);    
+            $("[id*=why-you]").prop("disabled",false);    
+         
+            $("[id*=current-job]").prop("disabled",false);
+            $("[id*=current-company]").prop("disabled",false);   
+            $("[id*=remote-work]").prop("disabled",false);    
+               
+            $("[id*=employer-approval]").prop("disabled",false);    
+                
+            $("[id*=joint-application]").prop("disabled",false);    
+            $("[id*=additional-information]").prop("disabled",false);    
+            $("[id*=pot-departure-date]").prop("disabled",false);    
+               
+            
+           
+            
+            $('[id$=why-remote-year]').rules("add",{
+                required: true
+            });
+            
+            $('[id$=why-you]').rules("add",{
+                required: true
+            });
+            
+            
+            
+            $('[id$=current-job]').rules("add",{
+                required: true
+            });
+            
+            $('[id$=current-company]').rules("add",{
+                required: true
+            });
+
+            $('[id$=remote-work]').rules("add",{
+                required: true
+            });
+            
+            
+            
+            $('[id$=employer-approval]').rules("add",{
+                required: true
+            });
+            
+            
+            
+            $('[id$=joint-application]').rules("add",{
+                email: true
+            });
+            
+            $('[id$=pot-departure-date]').rules("add",{
+                required: true
+            }); 
+            
+            $('[id$=recommender-1-name]').rules("add",{
+                required: true
+            });
+            
+            $('[id$=recommender-1-email]').rules("add",{
+                required: true,
+                email: true
+            });
+            
+            $('[id$=recommender-1-relationship]').rules("add",{
+                required: true
+            });
+            
+            $('[id$=recommender-2-name]').rules("add",{
+                required: true
+            });
+            
+            $('[id$=recommender-2-email]').rules("add",{
+                required: true,
+                email: true
+            });
+            
+            $('[id$=recommender-2-relationship]').rules("add",{
+                required: true
+            });
+                   
+            
+        } else {
+            $("[id*=email-address]").prop("disabled",false);    
+            $("[id*=email-address]").removeClass("disabled");    
+            $("#email-button").prop("disabled",false);    
+            
+                
+            $("[id*=recommender-1-name]").prop("disabled",true);
+            $("[id*=recommender-1-email]").prop("disabled",true);
+            $("[id*=recommender-1-relationship]").prop("disabled",true);
+            $("[id*=recommender-2-name]").prop("disabled",true);
+            $("[id*=recommender-2-email]").prop("disabled",true);
+            $("[id*=recommender-2-relationship]").prop("disabled",true);
+            $("[id*=why-remote-year]").prop("disabled",true);    
+            $("[id*=why-you]").prop("disabled",true);    
+              
+            $("[id*=current-job]").prop("disabled",true); 
+            $("[id*=current-company]").prop("disabled",true);   
+            $("[id*=remote-work]").prop("disabled",true);    
+                
+            $("[id*=employer-approval]").prop("disabled",true);    
+             
+            $("[id*=joint-application]").prop("disabled",true);    
+                
+            $("[id*=pot-departure-date]").prop("disabled",true);    
+                
+        }    
+    }    
+    
+    function verifyEmailComplete(){
+        if(appFound){            
+            enableFullValidation(true);        
+        } else {
+            $("#email-continue-button").removeClass("hidden");            
+        }    
+    }    
+    
+    function validateCodeComplete(){
+        if(promoApplied){
+            $("#pay-button").html('Submit');
+            $('#payment-help').html('{!$Label.App2_Help_PaymentNotRequired}');
+        }
+    }    
+    
+    
+    
+    if(isApplicationSubmitted){
+      window.top.location.href='{!$Label.App2_Url_ThankYou}';
+    }             
+    
+    </script>
+</apex:page>

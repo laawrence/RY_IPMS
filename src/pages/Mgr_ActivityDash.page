@@ -1,112 +1,113 @@
 <apex:page docType="html-5.0" sidebar="false" controller="Mgr_ActivityDash" standardStylesheets="false" title="PC Activities - Mgr View">
-
     <head>
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"/>
-    </head>    
-    
+    </head>
+
     <style type="text/css">
-    
-        <!--Common Styling Attributes-->
+
+        <!-- Common Styling Attributes -->
         h1 {font-size: 30pt; font-family: Lato;}
-        h2 {font-size: 20pt; font-family: Lato;} 
+        h2 {font-size: 20pt; font-family: Lato;}
         h3 {font-size: 16pt; font-family: Lato;}
         h4 {font-size: 14pt; font-family: Lato; color: #808080;}
         p {font-size: 14pt; font-family: Lato;}
-        
-        
-        <!--Unique Styling Attributes for this page-->
+
+
+        <!-- Unique Styling Attributes for this page -->
         #header {
-                float: left;    
+                float: left;
                 clear: both;
                 width: 100%;
                 background: #FAF5EF;
                 margin: -10px -20px 0px -10px;
             padding: 10px;
-            }   
-        
+            }
+
         #user_info {
                 float: left;
                 clear: left;
                 width: 100%;
                 margin: 20px 20px 20px 75px;
-                
-        } 
-        
-        #dp {
-         border: 0.5px solid black;   
+
         }
-                
+
+        #dp {
+         border: 0.5px solid black;
+        }
+
         #pc_activities {
             float: left;
             padding:20px 20px 20px 75px;
         }
-        
+
         #activity_table {border-collapse:collapse;}
         #activity_table td {line-height: 5px;}
         #activity_table th {
-            background: #56B3B2; 
+            background: #56B3B2;
             color: white;
             line-height: 300%;
         }
-        
+
         .data_column {
             padding: 0 20px 0 20px;
             width: 150px;
             text-align: center;
         }
-        
+
         #dropdown {padding-left:30px;}
-      
+
     </style>
-        
+
     <div id="header">
-    
+
         <div id="page_title">
             <table>
                 <tr>
                     <th><img  src="{! $Resource.RY_logo }" width="70" /></th>
                     <th><h1>PC Activities</h1></th>
                     <th id="dropdown">
-                        Select PC
                         <apex:form >
+                            Select PC
                             <apex:selectList size="1" value="{!passedName}">
                                 <apex:selectOptions value="{!UserList}"></apex:selectOptions>
                             </apex:selectList>
-                            
+                            Select FROM Date
+                            <apex:input type="date" value="{!passedFromDate}"></apex:input>
+                            Select TO Date
+                            <apex:input type="date" value="{!passedToDate}"></apex:input>
                             <apex:commandButton action="{!save}" value="Save" />
-    
                         </apex:form>
-                       
+
                    </th>
                 </tr>
             </table>
         </div>
-        
+
         <div id="user_info">
            <table>
                <tr>
                     <th><img id="dp" src="{! PCInfo.FullPhotoUrl}" width="70"/></th>
-                    <th><h2>{! PCInfo.Name } - Month of August</h2></th>
-                    
+                    <th><h2>{! PCInfo.Name } - Month {!fromMonth} </h2></th>
+
                </tr>
             </table>
-            
+
             <p>
-                Below is information on this PC's sales activities for the month of August. 
-                This is compared to the team's average. 
+                Below is information on this PC's sales activities for the month of August.
+                This is compared to the team's average.
             </p>
-            
+
         </div>
-        
+
     </div>
-    
-    
+
+
     <div id="contents">
 
         <div id="pc_activities">
-            
+
             <table id="activity_table">
-               
+
                 <tr>
                 <th></th>
                     <th class="data_column"><h3>PC</h3></th>
@@ -157,7 +158,7 @@
 
             </table>
         </div>
-        
-    </div>    
-    
+
+    </div>
+
 </apex:page>

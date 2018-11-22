@@ -1,12 +1,16 @@
 public class Mgr_ActivityDash
 {
 	// Declaring variables
-    //public String id = '00536000005KupH';
     public String id = '' + UserInfo.getUserId() + '';
-    public String startDay = '01';
-    public String endDay = '31';
-    public String month = '08';
-    public String year = '2018';
+    public String fromDay = '01';
+    public String toDay = '30';
+    public String fromMonth {
+      get{
+        return '10';} set;
+    }
+    public String toMonth = '10';
+    public String fromYear = '2018';
+    public String toYear = '2018';
     public Double scheduled;
     public Double teamScheduled;
     public Integer completes;
@@ -18,6 +22,8 @@ public class Mgr_ActivityDash
     public Integer teamWins;
     public String passedId{get;set;}
     public String passedName{get;set;}
+    public Date passedFromDate{get;set;}
+    public Date passedToDate{get;set;}
 
 // BACKGROUND
 // Below methods are used by various elements on the visualforce page PC_ActivityDash to get relevant data
@@ -35,8 +41,8 @@ public class Mgr_ActivityDash
             'SELECT COUNT() ' +
             'FROM Lead ' +
             'WHERE OwnerId = \'' + id + '\' AND Consultation_scheduled__c = TRUE ' +
-            'AND Consultation_Date_Time__c >= 2018-'+month+'-'+startDay+'T00:00:00Z ' +
-            'AND Consultation_Date_Time__c <= 2018-'+month+'-'+endDay+'T00:00:00Z'
+            'AND Consultation_Date_Time__c >= '+fromYear+'-'+fromMonth+'-'+fromDay+'T00:00:00Z ' +
+            'AND Consultation_Date_Time__c <= '+toYear+'-'+toMonth+'-'+toDay+'T00:00:00Z'
             );
 
             scheduled = results;
@@ -51,8 +57,8 @@ public class Mgr_ActivityDash
             'SELECT COUNT() ' +
             'FROM Lead ' +
             'WHERE Consultation_scheduled__c = TRUE ' +
-            'AND Consultation_Date_Time__c >= 2018-'+month+'-'+startDay+'T00:00:00Z ' +
-            'AND Consultation_Date_Time__c <= 2018-'+month+'-'+endDay+'T00:00:00Z'
+            'AND Consultation_Date_Time__c >= '+fromYear+'-'+fromMonth+'-'+fromDay+'T00:00:00Z ' +
+            'AND Consultation_Date_Time__c <= '+toYear+'-'+toMonth+'-'+toDay+'T00:00:00Z'
 
             );
 
@@ -63,7 +69,7 @@ public class Mgr_ActivityDash
 
   // Method used to calculate the hold rate of the current user (
 	public Integer getHoldRate() {
-     	getScheduled();
+     	  getScheduled();
         getCompletes();
 
         //Catching an error if dividing by 0
@@ -79,7 +85,7 @@ public class Mgr_ActivityDash
 
 	// Method used to calculate the hold rate of the team (
 	public Integer getTeamHoldRate() {
-     	getTeamScheduled();
+     	  getTeamScheduled();
         getTeamCompletes();
 
         // Catching error if dividing by zero
@@ -100,12 +106,12 @@ public class Mgr_ActivityDash
             'SELECT COUNT() ' +
             'FROM Lead ' +
             'WHERE OwnerId = \'' + id + '\' AND Consultation_Completed__c = TRUE ' +
-            'AND Consultation_completed_date__c >= 2018-'+month+'-'+startDay+' ' +
-            'AND Consultation_completed_date__c <= 2018-'+month+'-'+endDay+''
+            'AND Consultation_completed_date__c >= '+fromYear+'-'+fromMonth+'-'+fromDay+' ' +
+            'AND Consultation_completed_date__c <= '+toYear+'-'+toMonth+'-'+toDay+''
 
             );
 
-         	completes = results;
+      completes = results;
 			return results;
 
     }
@@ -117,8 +123,8 @@ public class Mgr_ActivityDash
             'SELECT COUNT() ' +
             'FROM Lead ' +
             'WHERE Consultation_Completed__c = TRUE ' +
-            'AND Consultation_completed_date__c >= 2018-'+month+'-'+startDay+' ' +
-            'AND Consultation_completed_date__c <= 2018-'+month+'-'+endDay+''
+            'AND Consultation_completed_date__c >= '+fromYear+'-'+fromMonth+'-'+fromDay+' ' +
+            'AND Consultation_completed_date__c <= '+toYear+'-'+toMonth+'-'+toDay+''
 
             );
 
@@ -134,14 +140,11 @@ public class Mgr_ActivityDash
             'SELECT COUNT() ' +
             'FROM Opportunity ' +
             'WHERE OwnerId = \'' + id + '\' ' +
-            'AND CreatedDate >= 2018-'+month+'-'+startDay+'T00:00:00Z ' +
-            'AND CreatedDate <= 2018-'+month+'-'+endDay+'T00:00:00Z '
-            //'AND CreatedDate >= 2018-06-01T00:00:00Z ' +
-            //'AND CreatedDate <= 2018-06-30T00:00:00Z '
-
+            'AND CreatedDate >= '+fromYear+'-'+fromMonth+'-'+fromDay+'T00:00:00Z ' +
+            'AND CreatedDate <= '+toYear+'-'+toMonth+'-'+toDay+'T00:00:00Z'
             );
 
-         	opps = results;
+      opps = results;
 			return results;
 
     }
@@ -152,8 +155,8 @@ public class Mgr_ActivityDash
        Integer results = Database.countQuery(
             'SELECT COUNT() ' +
             'FROM Opportunity ' +
-            'WHERE CreatedDate >= 2018-'+month+'-'+startDay+'T00:00:00Z ' +
-            'AND CreatedDate <= 2018-'+month+'-'+endDay+'T00:00:00Z '
+            'WHERE CreatedDate >= '+fromYear+'-'+fromMonth+'-'+fromDay+'T00:00:00Z ' +
+            'AND CreatedDate <= '+toYear+'-'+toMonth+'-'+toDay+'T00:00:00Z '
 
             );
 
@@ -202,8 +205,8 @@ public class Mgr_ActivityDash
             'FROM Opportunity ' +
             'WHERE OwnerId = \'' + id + '\' ' +
             'AND isWon = true ' +
-           	'AND CloseDate >= 2018-'+month+'-'+startDay+ '' +
-            'AND CloseDate <= 2018-'+month+'-'+endDay+''
+           	'AND CloseDate >= '+fromYear+'-'+fromMonth+'-'+fromDay+ '' +
+            'AND CloseDate <= '+toYear+'-'+toMonth+'-'+toDay+''
             );
 
          	wins = results;
@@ -217,8 +220,8 @@ public class Mgr_ActivityDash
             'SELECT COUNT() ' +
             'FROM Opportunity ' +
             'WHERE isWon = true ' +
-           	'AND CloseDate >= 2018-'+month+'-'+startDay+ '' +
-            'AND CloseDate <= 2018-'+month+'-'+endDay+''
+           	'AND CloseDate >= '+fromYear+'-'+fromMonth+'-'+fromDay+ '' +
+            'AND CloseDate <= '+toYear+'-'+toMonth+'-'+toDay+''
             );
 
          	teamWins = results/teamCount;
@@ -260,10 +263,15 @@ public class Mgr_ActivityDash
     // Method when 'save' button is pressed on page
     public PageReference save() {
 
-		// id = passedId;
         User pcFocus = Database.query('SELECT Id FROM User WHERE Name = \''+passedName+'\'');
         id = pcFocus.Id;
+        fromMonth = passedFromDate.month().format();
+        /*fromDay = passedFromDate.day().format();
+        toDay = passedToDate.day().format();
+        fromMonth = passedFromDate.month().format();
+        toMonth = passedToDate.month().format();*/
         return null;
+
     }
 
 

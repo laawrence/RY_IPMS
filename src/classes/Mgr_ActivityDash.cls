@@ -2,15 +2,7 @@ public class Mgr_ActivityDash
 {
 	  // Declaring variables
     public String id = '' + UserInfo.getUserId() + '';
-    public Double scheduled;
-    public Double teamScheduled;
-    public Integer completes;
-    public Integer teamCompletes;
     public Integer teamCount = 36;
-    public Double opps;
-    public Double teamOpps;
-    public Integer wins;
-    public Integer teamWins;
     public String passedId{get;set;}
     public String passedName{get;set;}
     public Date passedFromDate{get;set;}
@@ -84,9 +76,7 @@ public class Mgr_ActivityDash
             'AND Consultation_Date_Time__c <= '+toYear+'-'+toMonth+'-'+toDay+'T00:00:00Z'
             );
 
-            scheduled = results;
             return results;
-
     }
 
     // Method used to get information on the scheduled consultations of the team for the given time period
@@ -101,37 +91,30 @@ public class Mgr_ActivityDash
 
             );
 
-            teamScheduled = results/teamCount;
             return results/teamCount;
-
     }
 
   // Method used to calculate the hold rate of the current user (
 	public Integer getHoldRate() {
-     	  getScheduled();
-        getCompletes();
 
         //Catching an error if dividing by 0
-        If (scheduled == 0) {
+        If (getScheduled() == 0) {
          	return 0;
         } Else {
-        	Double holdRate = (completes/scheduled)*100;
+        	Double holdRate = (getCompletes()/getScheduled())*100;
         	Integer results = holdRate.intValue();
         	return results;
         }
-
     }
 
 	// Method used to calculate the hold rate of the team (
 	public Integer getTeamHoldRate() {
-     	  getTeamScheduled();
-        getTeamCompletes();
 
         // Catching error if dividing by zero
-       	If (teamScheduled == 0) {
+       	If (getTeamScheduled() == 0) {
         	return 0;
         } Else {
-            Double teamHoldRate = (teamCompletes/teamScheduled)*100;
+            Double teamHoldRate = (getTeamCompletes()/getTeamScheduled())*100;
         	Integer results = teamHoldRate.intValue();
         	return results;
         }
@@ -150,7 +133,6 @@ public class Mgr_ActivityDash
 
             );
 
-      completes = results;
 			return results;
 
     }
@@ -167,7 +149,6 @@ public class Mgr_ActivityDash
 
             );
 
-            teamCompletes = results/teamCount;
 			return results/teamCount;
 
     }
@@ -183,7 +164,6 @@ public class Mgr_ActivityDash
             'AND CreatedDate <= '+toYear+'-'+toMonth+'-'+toDay+'T00:00:00Z'
             );
 
-      opps = results;
 			return results;
 
     }
@@ -199,20 +179,17 @@ public class Mgr_ActivityDash
 
             );
 
-         	teamOpps = results/teamCount;
 			return results/teamCount;
     }
 
     // Method used to calculate a PC's C-O Rate
     public Integer getCORate() {
-        getCompletes();
-        getOpps();
 
         // Catching error if dividing by zero
-        If (completes == 0) {
+        If (getCompletes() == 0) {
          	return 0;
         } Else {
-           	Double CORate = (opps/completes)*100;
+           	Double CORate = (getOpps()/getCompletes())*100;
         	Integer results = CORate.intValue();
         	return results;
         }
@@ -221,16 +198,14 @@ public class Mgr_ActivityDash
 
 	// Method used to calculate the team's C-O Rate
 	public Integer getTeamCORate() {
-        getTeamCompletes();
-        getTeamOpps();
 
         // Catching error if dividing by zero
-        If (teamCompletes == 0) {
-         	return 0;
+        If (getTeamCompletes() == 0) {
+         	  return 0;
         } Else {
-            Double teamCORate = (teamOpps/teamCompletes)*100;
-        	Integer results = teamCORate.intValue();
-        	return results;
+            Double teamCORate = (getTeamOpps()/getTeamCompletes())*100;
+          	Integer results = teamCORate.intValue();
+          	return results;
         }
 
 
@@ -248,7 +223,6 @@ public class Mgr_ActivityDash
             'AND CloseDate <= '+toYear+'-'+toMonth+'-'+toDay+''
             );
 
-         	wins = results;
 			return results;
     }
 
@@ -263,21 +237,18 @@ public class Mgr_ActivityDash
             'AND CloseDate <= '+toYear+'-'+toMonth+'-'+toDay+''
             );
 
-         	teamWins = results/teamCount;
 			return results/teamCount;
 
     }
 
   // Method used to calculate a PC's O-W Rate
   public Integer getOWRate() {
-        getOpps();
-        getWins();
 
         // Catching error if dividing by zero
-        If (opps == 0) {
+        If (getOpps() == 0) {
           return 0;
         } Else {
-            Double OWRate = (wins/opps)*100;
+            Double OWRate = (getWins()/getOpps())*100;
         	Integer results = OWRate.intValue();
         	return results;
         }
@@ -286,14 +257,12 @@ public class Mgr_ActivityDash
 
 	// Method used to calculate the team's O-W Rate
 	public Integer getTeamOWRate() {
-        getTeamOpps();
-        getTeamWins();
 
         // Catching error if dividing by zero
-        If (teamOpps == 0) {
+        If (getTeamOpps() == 0) {
          	return 0;
         } Else {
-            Double teamOWRate = (teamWins/teamOpps)*100;
+            Double teamOWRate = (getTeamWins()/getTeamOpps())*100;
         	Integer results = teamOWRate.intValue();
         	return results;
         }

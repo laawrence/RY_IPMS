@@ -1,21 +1,12 @@
 public class Mgr_ActivityDash
 {
-	// Declaring variables
+	  // Declaring variables
     public String id = '' + UserInfo.getUserId() + '';
-    public String fromDay = '01';
-    public String toDay = '30';
-    public String fromMonth {
-      get{
-        return '10';} set;
-    }
-    public String toMonth = '10';
-    public String fromYear = '2018';
-    public String toYear = '2018';
     public Double scheduled;
     public Double teamScheduled;
     public Integer completes;
     public Integer teamCompletes;
-    public Integer teamCount = 38;
+    public Integer teamCount = 36;
     public Double opps;
     public Double teamOpps;
     public Integer wins;
@@ -24,8 +15,56 @@ public class Mgr_ActivityDash
     public String passedName{get;set;}
     public Date passedFromDate{get;set;}
     public Date passedToDate{get;set;}
+    public String fromDay = Date.today().day().format();
+    public String toDay = Date.today().day().format();
+    public String fromMonth = Date.today().month().format();
+    public String toMonth = Date.today().month().format();
+    public String fromYear = '2018';
+    public String toYear = '2018';
 
-// BACKGROUND
+    // Method to convert month number to text
+    public String getMonthName() {
+
+      String monthName;
+      if (passedFromDate == null) {
+          monthName = Date.today().month().format();
+      } else {
+          monthName = passedFromDate.month().format();
+      }
+      switch on monthName {
+        when '01' {return 'January';}
+        when '02' {return 'February';}
+        when '03' {return 'March';}
+        when '04' {return 'April';}
+        when '05' {return 'May';}
+        when '06' {return 'June';}
+        when '07' {return 'July';}
+        when '08' {return 'August';}
+        when '09' {return 'September';}
+        when '10' {return 'October';}
+        when '11' {return 'November';}
+        when '12' {return 'December';}
+        when else {return 'Month not found';}
+      }
+    }
+
+    // Populating the list of PCs for the dropdown menu
+    public List<SelectOption> UserSelection {
+        get
+        {
+            List <User> UserQueryList = new List<User>();
+            UserQueryList = [Select u.Id, u.Name From User u Where IsActive = true AND ProfileId = '00e36000001bNzGAAU' ORDER BY Name ASC];
+            List <SelectOption> UserList = new List<SelectOption>();
+            for(User user : UserQueryList)
+            {
+                UserList.add(new SelectOption(user.Name, user.Name));
+            }
+            return UserList;
+        }
+        set;
+    }
+
+
 // Below methods are used by various elements on the visualforce page PC_ActivityDash to get relevant data
 
     // Method used to get information relating to the current user
@@ -41,7 +80,7 @@ public class Mgr_ActivityDash
             'SELECT COUNT() ' +
             'FROM Lead ' +
             'WHERE OwnerId = \'' + id + '\' AND Consultation_scheduled__c = TRUE ' +
-            'AND Consultation_Date_Time__c >= '+fromYear+'-'+fromMonth+'-'+fromDay+'T00:00:00Z ' +
+            'AND Consultation_Date_Time__c >= '+fromYear+'-'+fromMonth+'-'+fromDay+'T00:00:00Z' +
             'AND Consultation_Date_Time__c <= '+toYear+'-'+toMonth+'-'+toDay+'T00:00:00Z'
             );
 
@@ -262,50 +301,22 @@ public class Mgr_ActivityDash
 
     // Method when 'save' button is pressed on page
     public PageReference save() {
-
         User pcFocus = Database.query('SELECT Id FROM User WHERE Name = \''+passedName+'\'');
         id = pcFocus.Id;
-        fromMonth = passedFromDate.month().format();
-        /*fromDay = passedFromDate.day().format();
-        toDay = passedToDate.day().format();
-        fromMonth = passedFromDate.month().format();
-        toMonth = passedToDate.month().format();*/
-        return null;
 
-    }
-
-
-    public List<User> UserTemp = new List<User>();
-
-    public List<SelectOption> UserList
-    {
-        get
-        {
-            UserTemp = [Select u.Id, u.Name From User u
-                        Where IsActive = true AND ProfileId = '00e36000001bNzGAAU' ORDER BY Name ASC];
-
-            UserList = new List<SelectOption>();
-
-            for(User temp : UserTemp)
-            {
-                UserList.add(new SelectOption(temp.Name, temp.Name));
-            }
-            return UserList;
+        if (passedFromDate != null) {
+            fromDay = passedFromDate.day().format();
+            fromMonth = passedFromDate.month().format();
+            fromYear = passedFromDate.year().format();
         }
-        set;
-    }
 
+        if (passedToDate != null) {
+            toDay = passedToDate.day().format();
+            toMonth = passedToDate.month().format();
+            toYear = passedToDate.year().format();
+        }
 
-
-
-    public Date fromDate{ get; set; }
-
-    public Date toDate{ get; set; }
-
-    public String theDate;
-
-    public PageReference UserInput() {
-     return null;
+        return null;
     }
 
 }

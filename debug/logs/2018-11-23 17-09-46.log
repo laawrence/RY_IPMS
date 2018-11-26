@@ -1,0 +1,54 @@
+27.0 APEX_CODE,DEBUG;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;NBA,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,DEBUG;WAVE,INFO;WORKFLOW,INFO
+17:09:45.73 (73282477)|SOQL_EXECUTE_BEGIN|[7]|Aggregations:0|SELECT Id, Name, Distribution_hours__c, CreatedBy.Name, Object_name__c, Is_active__c, CreatedDate, LastModifiedBy.Name, LastModifiedDate, Object_active_status_field_name__c, Object_active_status_values__c, Object_active_status_values_long__c FROM Team__c WHERE (Id IN (SELECT Team__c FROM Team_member__c WHERE (User__c = :tmpVar1 AND User__r.IsActive = TRUE)) AND Is_active__c = TRUE) ORDER BY Execution_order__c ASC NULLS FIRST
+17:09:45.73 (103411054)|SOQL_EXECUTE_END|[7]|Rows:1
+17:09:45.73 (105168085)|SOQL_EXECUTE_BEGIN|[363]|Aggregations:0|SELECT n2de__Team__c, Distribution_hours__c FROM Team_member__c WHERE (User__c = :tmpVar1 AND is_active__c = TRUE AND User__r.IsActive = TRUE AND Team__r.is_active__c = TRUE) ORDER BY Team__r.Execution_Order__c ASC NULLS FIRST
+17:09:45.73 (113818333)|SOQL_EXECUTE_END|[363]|Rows:1
+17:09:45.73 (114928809)|SOQL_EXECUTE_BEGIN|[20]|Aggregations:0|SELECT User__c, Queue_id__c FROM Out_of_office__c 
+17:09:45.73 (117609734)|SOQL_EXECUTE_END|[20]|Rows:0
+17:09:45.73 (118209701)|SOQL_EXECUTE_BEGIN|[28]|Aggregations:0|SELECT Id FROM Team_member__c 
+17:09:45.73 (119946734)|SOQL_EXECUTE_END|[28]|Rows:0
+17:09:45.73 (120369749)|SOQL_EXECUTE_BEGIN|[32]|Aggregations:0|SELECT Id FROM Team_member__c 
+17:09:45.73 (121839607)|SOQL_EXECUTE_END|[32]|Rows:0
+17:09:45.73 (124148138)|SOQL_EXECUTE_BEGIN|[371]|Aggregations:0|SELECT Mon_availability__c, Mon_start_hour__c, Mon_start_min__c, Mon_end_hour__c, Mon_end_min__c, Tue_availability__c, Tue_start_hour__c, Tue_start_min__c, Tue_end_hour__c, Tue_end_min__c, Wed_availability__c, Wed_start_hour__c, Wed_start_min__c, Wed_end_hour__c, Wed_end_min__c, Thu_availability__c, Thu_start_hour__c, Thu_start_min__c, Thu_end_hour__c, Thu_end_min__c, Fri_availability__c, Fri_start_hour__c, Fri_start_min__c, Fri_end_hour__c, Fri_end_min__c, Sat_availability__c, Sat_start_hour__c, Sat_start_min__c, Sat_end_hour__c, Sat_end_min__c, Sun_availability__c, Sun_start_hour__c, Sun_start_min__c, Sun_end_hour__c, Sun_end_min__c, Timezone__c, Shift_name__c, Is_shift_hours__c FROM Distribution_hours__c WHERE Id = :tmpVar1
+17:09:45.73 (133560176)|SOQL_EXECUTE_END|[371]|Rows:1
+17:09:45.73 (143065192)|SOQL_EXECUTE_BEGIN|[15]|Aggregations:0|SELECT n2de__Team__c FROM Team_member__c 
+17:09:45.73 (152753219)|SOQL_EXECUTE_END|[15]|Rows:1
+17:09:45.73 (170562322)|SOQL_EXECUTE_BEGIN|[55]|Aggregations:0|select Id, Name, Execution_order__c, Team__r.Execution_order__c from Distributor__c  where Is_Active__c = true and Distributor_type__c = 'Pull' and Is_all_members__c = true and ((Is_respect_distribution_hours__c = false and Team__c in :userTeamIdList)  or Team__c in :activeTeams )
+17:09:45.73 (177187024)|SOQL_EXECUTE_END|[55]|Rows:0
+17:09:45.73 (179621219)|SOQL_EXECUTE_BEGIN|[57]|Aggregations:0|select Id, Name, Execution_order__c, Team__r.Execution_order__c from Distributor__c  where Is_Active__c = true and Distributor_type__c = 'Pull' and Is_all_members__c = false and Id in (select Distributor__c from Distributor_category_team_member__c  where Distribution_team_member__r.User__c = '00536000004x6RhAAI') and ((Is_respect_distribution_hours__c = false and Team__c in :userTeamIdList)  or Team__c in :activeTeams )
+17:09:45.73 (188166548)|SOQL_EXECUTE_END|[57]|Rows:0
+17:09:45.73 (190674583)|SOQL_EXECUTE_BEGIN|[440]|Aggregations:0|SELECT COUNT(Id) alertCount FROM Distribution_log__c WHERE (Distribution_team_member__r.User__c = :tmpVar1 AND In_alert__c = TRUE AND Is_reassigned_to_queue__c = FALSE)
+17:09:45.73 (195784460)|SOQL_EXECUTE_END|[440]|Rows:1
+17:09:45.73 (198195458)|SOQL_EXECUTE_BEGIN|[455]|Aggregations:0|SELECT CreatedDate, Assigned_object_id_index__c, Distribution_team_member__r.Team__r.Object_Name__c, Distributor__r.Team__r.Object_active_status_field_name__c, Distributor__r.Team__r.New_status_value__c FROM Distribution_log__c 
+17:09:45.73 (206787720)|SOQL_EXECUTE_END|[455]|Rows:0
+17:09:45.227 (227130687)|CUMULATIVE_LIMIT_USAGE
+17:09:45.227 (227130687)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 0 out of 100
+  Number of query rows: 0 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+17:09:45.227 (227130687)|LIMIT_USAGE_FOR_NS|n2de|
+  Number of SOQL queries: 11 out of 100
+  Number of query rows: 5 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+17:09:45.227 (227130687)|CUMULATIVE_LIMIT_USAGE_END
+

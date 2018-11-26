@@ -69,7 +69,7 @@
                         <apex:form >
                             Select PC
                             <apex:selectList size="1" value="{!passedName}">
-                                <apex:selectOptions value="{!UserList}"></apex:selectOptions>
+                                <apex:selectOptions value="{!UserSelection}"></apex:selectOptions>
                             </apex:selectList>
                             Select FROM Date
                             <apex:input type="date" value="{!passedFromDate}"></apex:input>
@@ -87,13 +87,13 @@
            <table>
                <tr>
                     <th><img id="dp" src="{! PCInfo.FullPhotoUrl}" width="70"/></th>
-                    <th><h2>{! PCInfo.Name } - Month {!fromMonth} </h2></th>
+                    <th><h2>{! PCInfo.Name } - {!monthName}</h2></th>
 
                </tr>
             </table>
 
             <p>
-                Below is information on this PC's sales activities for the month of August.
+                Below is information on this PC's sales activities for the month of {!monthName}.
                 This is compared to the team's average.
             </p>
 
@@ -116,7 +116,7 @@
 
                 <tr>
                 <td><h3>Consultations Scheduled</h3></td>
-                   <td class="data_column"><p>{! scheduled }</p></td>
+                    <td class="data_column"><p>{! scheduled }</p></td>
                     <td class="data_column"><p>{! TeamScheduled }</p></td>
                </tr>
 

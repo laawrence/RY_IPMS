@@ -3,7 +3,6 @@ public class Mgr_ActivityDash
 	  // Declaring variables
     public String id = '' + UserInfo.getUserId() + '';
     public Integer teamCount = 36;
-    public String passedId{get;set;}
     public String passedName{get;set;}
     public Date passedFromDate{get;set;}
     public Date passedToDate{get;set;}
@@ -21,7 +20,12 @@ public class Mgr_ActivityDash
       if (passedFromDate == null) {
           monthName = Date.today().month().format();
       } else {
-          monthName = passedFromDate.month().format();
+          if (passedFromDate.month() < 10) {
+              monthName = '0' + passedFromDate.month().format();
+          } else {
+              monthName = passedFromDate.month().format();
+          }
+
       }
       switch on monthName {
         when '01' {return 'January';}
@@ -76,7 +80,13 @@ public class Mgr_ActivityDash
             'AND Consultation_Date_Time__c <= '+toYear+'-'+toMonth+'-'+toDay+'T00:00:00Z'
             );
 
-            return results;
+            if (results == null) {
+                return 0;
+            } else {
+                return results;
+            }
+
+
     }
 
     // Method used to get information on the scheduled consultations of the team for the given time period
@@ -273,16 +283,37 @@ public class Mgr_ActivityDash
         User pcFocus = Database.query('SELECT Id FROM User WHERE Name = \''+passedName+'\'');
         id = pcFocus.Id;
 
+        // Catching null entry by user
         if (passedFromDate != null) {
-            fromDay = passedFromDate.day().format();
-            fromMonth = passedFromDate.month().format();
-            fromYear = passedFromDate.year().format();
+
+            // Adding 0 to String for DB purposes
+            if (passedFromDate.day() < 10) {
+                fromDay = '0' + passedFromDate.day().format();
+            } else {
+                fromDay = passedFromDate.day().format();
+            }
+
+            if (passedFromDate.month() < 10) {
+                fromMonth = '0' + passedFromDate.month().format();
+            } else {
+                fromMonth = passedFromDate.month().format();
+            }
         }
 
+        // Catching null entry by user
         if (passedToDate != null) {
-            toDay = passedToDate.day().format();
-            toMonth = passedToDate.month().format();
-            toYear = passedToDate.year().format();
+          // Adding 0 to String for DB purposes
+          if (passedToDate.day() < 10) {
+              toDay = '0' + passedToDate.day().format();
+          } else {
+              toDay = passedToDate.day().format();
+          }
+
+          if (passedToDate.month() < 10) {
+              toMonth = '0' + passedToDate.month().format();
+          } else {
+              toMonth = passedToDate.month().format();
+          }
         }
 
         return null;
